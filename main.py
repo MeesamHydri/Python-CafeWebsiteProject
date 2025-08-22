@@ -1,5 +1,4 @@
 from secrets import token_hex
-
 from flask import Flask, request, render_template, url_for, redirect, flash
 from flask_bootstrap import Bootstrap5
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
