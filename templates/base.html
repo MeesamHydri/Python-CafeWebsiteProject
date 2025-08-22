@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+   <head>
+      {% block head %}
+      <!-- Required meta tags -->
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      {% block styles %}
+      <!-- Bootstrap CSS -->
+      {{ bootstrap.load_css() }}
+      {% endblock %}
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+      <title>Cafe and Wifi</title>
+      {% endblock %}
+   </head>
+   <body>
+      <nav class="navbar navbar-expand-lg bg-body-tertiary">
+         <div class="container-fluid">
+            <a class="navbar-brand" href="#">Laptop Friendly</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor04" aria-controls="navbarColor04" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarColor04">
+               <!-- Left side -->
+               <ul class="navbar-nav me-auto">
+                  <li class="nav-item">
+                     <a class="nav-link active" href="{{ url_for('home') }}">Home
+                     <span class="visually-hidden">(current)</span>
+                     </a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="{{ url_for('suggest_cafe') }}">Suggest Places</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="{{ url_for('cafes') }}">Cafes</a>
+                  </li>
+               </ul>
+               <!-- Right side -->
+               <ul class="navbar-nav ms-auto">
+                  {% if current_user.is_authenticated %}
+                  <li class="nav-item">
+                     <a class="nav-link" href="#">Profile</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="{{url_for('logout')}}">Logout</a>
+                  </li>
+                  {% else %}
+                  <li class="nav-item">
+                     <a class="nav-link" href="{{url_for('login')}}">Login</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="{{url_for('register')}}">Register</a>
+                  </li>
+                  {% endif %}
+               </ul>
+            </div>
+         </div>
+      </nav>
+           <!-- Flash messages -->
+      <div class="container mt-3">
+         {% with messages = get_flashed_messages(with_categories=true) %}
+         {% if messages %}
+         {% for category, message in messages %}
+         <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+         </div>
+         {% endfor %}
+         {% endif %}
+         {% endwith %}
+      </div>
+      <!-- Your page content -->
+      {% block content %}
+      {% endblock %}
+      {% block scripts %}
+      <!-- Optional JavaScript -->
+      {{ bootstrap.load_js() }}
+      {% endblock %}
+   </body>
+</html>

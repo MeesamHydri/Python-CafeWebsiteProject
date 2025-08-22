@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% from 'bootstrap5/form.html' import render_form %}
+{% block content %}
+
+<div class="container my-5">
+   <div class="p-5 text-center bg-body-tertiary rounded-3">
+      <h1 class="text-body-emphasis">Suggest Some New Places</h1>
+      <p class="col-lg-8 mx-auto fs-5 text-muted">
+         Please suggest a new cafe which you think is a good place for working and it is laptop friendly.
+      </p>
+   </div>
+</div>
+<div class="row">
+    <div class="col-md-6 col-lg-4 mx-auto">
+        {{ render_form(form) }}
+    </div>
+</div>
+
+
+{% endblock %}
+
