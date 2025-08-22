@@ -1,37 +1,27 @@
-# Cafe and Wifi Finder
+# ☕ Cafe Finder App
 
-A Flask web application to browse cafes, suggest new cafes, and manage users with registration and login functionality. The app uses **Flask**, **Flask-Login**, **Flask-Bootstrap**, **Flask-WTF**, and **SQLite** for the database.
-
----
-
-## Features
-
-- User registration and login with hashed passwords.
-- Secure sessions with Flask-Login.
-- Browse a list of cafes with details including:
-  - Name, location, map link, image
-  - Amenities: Wi-Fi, sockets, toilets, phone-call friendly
-  - Seats and coffee prices
-- Suggest a new cafe via a form.
-- Flash messages for feedback (success, error, info).
-- CSRF protection on forms.
+A Flask-based web application where users can **discover cafes**, **suggest new cafes**, and **manage accounts** with authentication.  
+The app supports login, registration, and CRUD operations for cafes with secure password handling.  
 
 ---
 
-## Tech Stack
-
-- **Backend:** Flask, Flask-Login, SQLAlchemy
-- **Frontend:** Bootstrap 5 (via Flask-Bootstrap)
-- **Database:** SQLite
-- **Forms:** Flask-WTF with CSRF protection
-- **Password Security:** Werkzeug hashing (`pbkdf2:sha256`)
+## 🚀 Features
+- 🔐 User Authentication (Register, Login, Logout)
+- 👥 Secure password hashing with **Werkzeug**
+- ☕ Add and view cafes with details:
+  - Name, Location, Map URL, Image URL
+  - Availability of sockets, WiFi, toilets, and call-friendly environment
+  - Seating info and coffee prices
+- 🛡 CSRF Protection enabled
+- 🎨 Styled with **Flask-Bootstrap5**
+- 🗄 Persistent data storage with **SQLite + SQLAlchemy ORM**
 
 ---
 
-## Installation
+## 🛠 Tech Stack
+- **Backend:** Flask, Flask-Login, Flask-WTF
+- **Frontend:** Flask-Bootstrap5, Jinja2 templates
+- **Database:** SQLite + SQLAlchemy ORM
+- **Security:** CSRFProtect, Password Hashing (pbkdf2:sha256)
 
-1. **Clone the repository:**
-
-```bash
-git clone <your-repo-url>
-cd <repo-directory>
+---
