@@ -1,7 +1,7 @@
 from secrets import token_hex
 from flask import Flask, request, render_template, url_for, redirect, flash
 from flask_bootstrap import Bootstrap5
-from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
 from sqlalchemy import String, Boolean
@@ -18,6 +18,10 @@ bootstrap = Bootstrap5(app)
 csrf  = CSRFProtect(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
+
+#Add login view for unauthorized users
+login_manager.login_view = "login"
+login_manager.login_message_category = "info"
 #END
 
 # SQLALCHEMY SETUP
@@ -77,7 +81,7 @@ def register():
         user = User.query.filter_by(email=email).first()
 
         if user:
-            flash("This email has already been registered, please log-in to continue!")
+            flash("This email has already been registered, please log-in to continue!", "info")
             return redirect(url_for('login'))
 
         new_user = User(
@@ -87,9 +91,8 @@ def register():
         )
         db.session.add(new_user)
         db.session.commit()
-        flash("Registered Successfully!")
+        flash("Registered Successfully!", "success")
         return redirect(url_for('login'))
-
 
     return render_template("register.html", form=form)
 
@@ -97,19 +100,19 @@ def register():
 @app.route("/login", methods=["GET","POST"])
 def login():
     form = LoginForm()
-    email = form.email.data
-    password = form.password.data
 
     if form.validate_on_submit():
+        email = form.email.data
+        password = form.password.data
         result = db.session.execute(db.select(User).where(User.email == email))
         user = result.scalar_one_or_none()
 
         if user and check_password_hash(user.password, password):
             login_user(user)
-            flash("Logged in Successfully!")
+            flash("Logged in Successfully!", "info")
             return redirect(url_for('home'))
         else:
-            flash("Invalid credentials, Please try again")
+            flash("Invalid credentials, Please try again", "danger")
             return redirect(url_for('login'))
 
     return render_template("login.html", form=form)
@@ -118,9 +121,8 @@ def login():
 @login_required
 def logout():
     logout_user()
-    flash("logged out successfully!")
+    flash("logged out successfully!", "success")
     return redirect(url_for('home'))
-
 
 @app.route("/cafes")
 def cafes():
@@ -129,6 +131,7 @@ def cafes():
     return render_template("cafes.html", cafes=all_cafes)
 
 @app.route("/suggest-cafe", methods=["GET","POST"])
+@login_required
 def suggest_cafe():
     form = AddCafeForm()
     if form.validate_on_submit():
@@ -148,9 +151,6 @@ def suggest_cafe():
         db.session.commit()
         flash("Cafe added successfully!", "success")
         return redirect(url_for('cafes'))
-
-    print(form.errors)
-    print(request.method)
 
     return render_template("add-cafe.html", form=form)
 
