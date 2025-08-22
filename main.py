@@ -1,14 +1,14 @@
-from enum import unique
-
-from flask import Flask, jsonify, request, render_template, url_for, redirect, flash
-from werkzeug.security import generate_password_hash, check_password_hash
-from flask_wtf.csrf import CSRFProtect
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm import DeclarativeBase, Mapped, MappedColumn
-from sqlalchemy import String, Integer, Boolean
-from flask_bootstrap import Bootstrap5
 from secrets import token_hex
-from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+
+from flask import Flask, request, render_template, url_for, redirect, flash
+from flask_bootstrap import Bootstrap5
+from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user
+from flask_sqlalchemy import SQLAlchemy
+from flask_wtf.csrf import CSRFProtect
+from sqlalchemy import String, Boolean
+from sqlalchemy.orm import DeclarativeBase, Mapped, MappedColumn
+from werkzeug.security import generate_password_hash, check_password_hash
+
 from forms import LoginForm, AddCafeForm, RegisterUser
 
 # FLASK + CONFIG
